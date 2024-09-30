@@ -23,9 +23,12 @@ import OpenAI from "openai";
 import { useEffect, useRef, useState } from "react";
 import StreamingAvatarTextInput from "./StreamingAvatarTextInput";
 
-const conversationId = "pQaxpHOMGwGKDsZwRiOP"; // Hardcoded conversation ID
-const tokenId = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoQ2xhc3MiOiJWaXNpdG9yIiwiYXV0aENsYXNzSWQiOiIyNzEzNDE2MC0wOTQ3LTQzYTYtYmMzNi1mMGUxNThhZmU0MDciLCJwcmltYXJ5QXV0aENsYXNzSWQiOm51bGwsImNoYW5uZWwiOiJDSEFUX1dJREdFVCIsInNvdXJjZSI6IkNIQVRfV0lER0VUX1ZJU0lUT1IiLCJzb3VyY2VJZCI6Ik5BIiwiaWF0IjoxNzI2OTgzODgyLjM3OCwiZXhwIjoxNzQyNTM1ODgyLjM3OH0.dTEPsrowPAuRO-m3YSlMlF78lsjgadSte0RIorni2iJJ4pIUQ55NHlRch1p3qK4IqhK06VBpe8y09dF9EIwuNCN5MNH8Vieo9APmgXdisWeFwX_gYb-g_8UPTkeXcY4YYNxb9vTQ9KyuJ9Q_Dj0kb3xIzRiy-lBgf43oTLscnFlTrU5aaNajMtEUGlcYAVaxdItu40xKz0HhaGByS2LMq7Eucbs6vXfH0jHRU0A1N1q3j1SMqns-KmVZoEYUfe8x-8t0tnLZ5xPQ35huI63Y8wo8u2Yz1DEz47bnuzby_U4A1S4UmD5PqutvHppdMZKxuiGpBBA0yI8d7ybzxW5htA2DN7fURlF2FhkDClwT1mUY05v4oTyiho-JRZ_FC9l_9Dr6yBEhauvnb0PpWJfjqnbHnaZ9WjyLqgK4xZst3Dhr_fbYdS980ABxWda4G3i_sZYSjflAZPs0LeYkH-EuIILkqmIG4QjET5Mymy-jZSSAlsPA9UdFJF6qkF1t_-hvwicmh3kM55NCrydX9-1MzYC_lJIzsRAVXAGh2OASwBKEp6nhciIcjV0hc4IA0F7fiLDygekj6mijN6tBi478FXEiPZ8E2-_JNQy0zcf5J8lIUwTrioxLLzcPRBfjMK-Gw5Bmdj1qC_X_rIbaOqTxI3tbeWQ4iGSxkCIMkvnRy7I"; // Hardcoded token ID
+// const conversationId = "pQaxpHOMGwGKDsZwRiOP"; // Hardcoded conversation ID
+// const tokenId = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoQ2xhc3MiOiJWaXNpdG9yIiwiYXV0aENsYXNzSWQiOiIyNzEzNDE2MC0wOTQ3LTQzYTYtYmMzNi1mMGUxNThhZmU0MDciLCJwcmltYXJ5QXV0aENsYXNzSWQiOm51bGwsImNoYW5uZWwiOiJDSEFUX1dJREdFVCIsInNvdXJjZSI6IkNIQVRfV0lER0VUX1ZJU0lUT1IiLCJzb3VyY2VJZCI6Ik5BIiwiaWF0IjoxNzI2OTgzODgyLjM3OCwiZXhwIjoxNzQyNTM1ODgyLjM3OH0.dTEPsrowPAuRO-m3YSlMlF78lsjgadSte0RIorni2iJJ4pIUQ55NHlRch1p3qK4IqhK06VBpe8y09dF9EIwuNCN5MNH8Vieo9APmgXdisWeFwX_gYb-g_8UPTkeXcY4YYNxb9vTQ9KyuJ9Q_Dj0kb3xIzRiy-lBgf43oTLscnFlTrU5aaNajMtEUGlcYAVaxdItu40xKz0HhaGByS2LMq7Eucbs6vXfH0jHRU0A1N1q3j1SMqns-KmVZoEYUfe8x-8t0tnLZ5xPQ35huI63Y8wo8u2Yz1DEz47bnuzby_U4A1S4UmD5PqutvHppdMZKxuiGpBBA0yI8d7ybzxW5htA2DN7fURlF2FhkDClwT1mUY05v4oTyiho-JRZ_FC9l_9Dr6yBEhauvnb0PpWJfjqnbHnaZ9WjyLqgK4xZst3Dhr_fbYdS980ABxWda4G3i_sZYSjflAZPs0LeYkH-EuIILkqmIG4QjET5Mymy-jZSSAlsPA9UdFJF6qkF1t_-hvwicmh3kM55NCrydX9-1MzYC_lJIzsRAVXAGh2OASwBKEp6nhciIcjV0hc4IA0F7fiLDygekj6mijN6tBi478FXEiPZ8E2-_JNQy0zcf5J8lIUwTrioxLLzcPRBfjMK-Gw5Bmdj1qC_X_rIbaOqTxI3tbeWQ4iGSxkCIMkvnRy7I"; // Hardcoded token ID
 
+
+const dataWidgetId = "66d01cf3f0610d45aac281d0";
+const dataLocationId = "iXTyVwO6W2aVQLa0g3Ow";
 
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -75,9 +78,82 @@ export default function StreamingAvatar() {
     ],
   });
 
+
   const [avatarId, setAvatarId] = useState<string>("josh_lite3_20230714");
   const [voiceId, setVoiceId] = useState<string>("077ab11b14f04ce0b49b5f6e5cc20979");
   const [sessionStarted, setSessionStarted] = useState<boolean>(false);
+
+  async function createChat(){
+    try {
+      let storedconversationId = localStorage.getItem('conversationId');
+      let storedtokenId = localStorage.getItem('tokenId');
+
+      if (storedconversationId && storedtokenId) {
+        console.log(" conversationId and tokenId Item found");
+        console.log("Skipping new chat creation...");
+      } else {
+        console.log("conversationId and tokenId Item not found");
+        console.log("Creating a new chat...");
+
+        const url = "https://services.leadconnectorhq.com/conversations/providers/live-chat/messages";
+        const headers = {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+        };
+        const payload = {
+          locationId: dataLocationId,
+          message: "hi from kaytest",
+          type: "Live_Chat",
+          chatWidgetId:  dataWidgetId
+        };
+  
+        // const response = await fetch(url, {
+        //   method: 'POST',
+        //   headers: headers,
+        //   body: JSON.stringify(payload)
+        // });
+    
+        // const data = await response.json();
+        // console.log('Success:', data);
+        // console.log("Message sent successfully!");
+  
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+             let receive_conversationId = data.conversationId || 'N/A';
+             let receive_token = data.token || 'N/A';
+            // const visitorId = data.visitorId || 'N/A';
+  
+            // document.getElementById('conversationId').innerText = conversationId;
+            // document.getElementById('token').innerText = token;
+            // document.getElementById('visitorId').innerText = visitorId;
+            // document.getElementById('outputContainer').style.display = 'block';
+  
+            // Store values in localStorage
+            localStorage.setItem('conversationId', receive_conversationId);
+            localStorage.setItem('tokenId', receive_token);
+            // localStorage.setItem('visitorId', visitorId);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to create new chat during fetching: ' + error.message);
+        });
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      console.log('Failed to create new chat during init.');
+    }
+  }
 
   async function fetchAccessToken() {
     try {
@@ -96,6 +172,7 @@ export default function StreamingAvatar() {
   async function startSession() {
     setIsLoadingSession(true);
     await updateToken();
+    createChat();
     if (!avatar.current) {
       setDebug("Avatar API is not initialized");
       return;
@@ -173,9 +250,52 @@ export default function StreamingAvatar() {
     setSessionStarted(false); // Reset session started state
   }
 
+  // async function getOpenAIresponse(){
+
+  //   const openai = new OpenAI({
+  //     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // Next.js requires you to prefix environment variables with NEXT_PUBLIC_ to make them accessible in the browser (client-side code).
+  //     dangerouslyAllowBrowser: true,
+  //   });
+  
+  
+  //   const response = await openai.chat.completions.create({
+  //     model: "gpt4o-mini",
+  //     messages: [
+  //       { role: "system", content: "You are an assistant." },
+  //       { role: "user", content: text }
+  //     ],
+  //     temperature: 0.3,
+  //     max_tokens: 4096,
+  //     top_p: 0.9,
+  //     frequency_penalty: 0.1,
+  //     presence_penalty: 0.1
+  //   });
+
+  //   const rtn: string = response.choices[0].message.content as string;
+    
+  //   // Log the response from OpenAI
+  //   console.log("OpenAI Response:", rtn);
+
+  //   // Check if response.choices[0].message.content is not null
+  //   if (response.choices[0]?.message?.content !== null) {
+  //     const rtn: string = response.choices[0].message.content;
+      
+  //     // Log the response from OpenAI
+  //     console.log("OpenAI Response:", rtn);
+
+  // }
+
+  // }
+
+
   async function checkMessage(){
 
     setIsLoadingRepeat(true);
+
+    let storedconversationId = localStorage.getItem('conversationId');
+    let storedtokenId = localStorage.getItem('tokenId');
+
+    
     if (!initialized || !avatar.current) {
       setDebug("Avatar API not initialized");
       return;
@@ -184,7 +304,7 @@ export default function StreamingAvatar() {
     let newText = "";
     const url = new URL("https://services.leadconnectorhq.com/conversations/providers/live-chat/messages/search");
     const params = {
-      conversationId: conversationId,
+      conversationId: storedconversationId,
       locationId: "iXTyVwO6W2aVQLa0g3Ow",
       lastMessageId: "",
       pageLimit: 10,
@@ -193,7 +313,7 @@ export default function StreamingAvatar() {
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
   
     const headers = {
-      "Authorization": `Bearer ${tokenId}`,
+      "Authorization": `Bearer ${storedtokenId}`,
       "Content-Type": "application/json",
     };
   
@@ -212,9 +332,9 @@ export default function StreamingAvatar() {
     // Retrieve the last fetched messages from localStorage
     // const storedMessages = JSON.parse(localStorage.getItem('messages')) || "";
     const storedMessages: string = JSON.parse(localStorage.getItem('messages') as string) || "";
-    console.log("--last-message--");
-    console.log(storedMessages);
-    console.log("---");
+    // console.log("--last-message--");
+    // console.log(storedMessages);
+    // console.log("---");
     
 
     // Find new outbound messages
@@ -228,18 +348,16 @@ export default function StreamingAvatar() {
     // Display new outbound messages
     if (newOutboundMessages.length > 0) {
         newMessage = newOutboundMessages.map(msg => msg.body).join('\n');
+        console.log("leadConnector Response:", newMessage);
     } else {
         newMessage = '';
     }
-
-
-    console.log("leadConnector Response:", newMessage);
     newText = newMessage;
 
     // Save the current messages to localStorage
     localStorage.setItem('messages', JSON.stringify(messages));
-    localStorage.setItem('conversationId', conversationId);
-    localStorage.setItem('tokenId', tokenId);
+    // localStorage.setItem('conversationId', storedconversationId);
+    // localStorage.setItem('tokenId', storedtokenId);
 
     }
     
@@ -262,184 +380,61 @@ export default function StreamingAvatar() {
     }
   }
 
-  async function handleSpeak() {
 
-    // setIsLoadingRepeat(true);
-    // if (!initialized || !avatar.current) {
-    //   setDebug("Avatar API not initialized");
-    //   return;
-    // }
-
-    checkMessage();
-
-    // const openai = new OpenAI({
-    //   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // Next.js requires you to prefix environment variables with NEXT_PUBLIC_ to make them accessible in the browser (client-side code).
-    //   dangerouslyAllowBrowser: true,
-    // });
-  
-  
-    // const response = await openai.chat.completions.create({
-    //   model: "gpt4o-mini",
-    //   messages: [
-    //     { role: "system", content: "You are an assistant." },
-    //     { role: "user", content: text }
-    //   ],
-    //   temperature: 0.3,
-    //   max_tokens: 4096,
-    //   top_p: 0.9,
-    //   frequency_penalty: 0.1,
-    //   presence_penalty: 0.1
-    // });
-
-    // const rtn: string = response.choices[0].message.content as string;
-    
-    // // Log the response from OpenAI
-    // console.log("OpenAI Response:", rtn);
-
-    // // Check if response.choices[0].message.content is not null
-    // if (response.choices[0]?.message?.content !== null) {
-    //   const rtn: string = response.choices[0].message.content;
-      
-    //   // Log the response from OpenAI
-    //   console.log("OpenAI Response:", rtn);
-
-
-    ///
-
-      
-      // let newText = "";
-      // const url = new URL("https://services.leadconnectorhq.com/conversations/providers/live-chat/messages/search");
-      // const params = {
-      //   conversationId: conversationId,
-      //   locationId: "iXTyVwO6W2aVQLa0g3Ow",
-      //   lastMessageId: "",
-      //   pageLimit: 10,
-      // };
-    
-      // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    
-      // const headers = {
-      //   "Authorization": `Bearer ${tokenId}`,
-      //   "Content-Type": "application/json",
-      // };
-    
-      // try {
-      //   const response = await fetch(url, { method: 'GET', headers: headers });
-    
-      //   if (response.status === 429) {
-      //     console.warn('Too many requests. Backing off...');
-      //     await new Promise(resolve => setTimeout(resolve, 60000)); // wait for 60 seconds
-      //     return; // Exit the function to avoid further processing
-      //   }
-      // ///+
-      // const data = await response.json();
-      // const messages = data.messages;
-  
-      // // Retrieve the last fetched messages from localStorage
-      // // const storedMessages = JSON.parse(localStorage.getItem('messages')) || "";
-      // const storedMessages: string = JSON.parse(localStorage.getItem('messages') as string) || "";
-      // console.log("--last-message--");
-      // console.log(storedMessages);
-      // console.log("---");
-      
-
-      // // Find new outbound messages
-      // const newOutboundMessages = messages.filter(newMsg => 
-      //   newMsg.direction === "outbound" &&
-      //   !storedMessages.some(storedMsg => storedMsg.id === newMsg.id)
-      // );
-
-      // let newMessage = "";
-
-      // // Display new outbound messages
-      // if (newOutboundMessages.length > 0) {
-      //     newMessage = newOutboundMessages.map(msg => msg.body).join('\n');
-      // } else {
-      //     newMessage = '';
-      // }
-
-
-      // console.log("leadConnector Response:", newMessage);
-      // newText = newMessage;
-
-      // // Save the current messages to localStorage
-      // localStorage.setItem('messages', JSON.stringify(messages));
-      // localStorage.setItem('conversationId', conversationId);
-      // localStorage.setItem('tokenId', tokenId);
-
-      // }
-      
-      
-      // catch (error) {
-      //   console.error('Error fetching messages:', error);
-      // }
-
-      // if (newText === "") {
-      //   console.log("No new outbound messages");
-      // } else {
-      //     // console.log("Message is not empty");
-      //     // Use the response as needed, for example, to speak through the avatar
-      //     await avatar.current
-      //     .speak({ taskRequest: { text: newText, sessionId: data?.sessionId } })
-      //     .catch((e) => {
-      //       setDebug(e.message);
-      //     });
-      //     setIsLoadingRepeat(false);
-      // }
-
-      
-
-      // // Use the response as needed, for example, to speak through the avatar
-      // await avatar.current
-      // .speak({ taskRequest: { text: newText, sessionId: data?.sessionId } })
-      // .catch((e) => {
-      //   setDebug(e.message);
-      // });
-      // setIsLoadingRepeat(false);
-
-    // Log the text state when onSubmit is triggered
-    console.log("Submitted text:", text);
-
-
-    //send message here:
-
+  async function sendMessage(text: string) {
     try {
+
+      let storedconversationId = localStorage.getItem('conversationId');
+      let storedtokenId = localStorage.getItem('tokenId');
 
       const url = "https://services.leadconnectorhq.com/conversations/providers/live-chat/messages";
       const headers = {
-          "Authorization": `Bearer ${tokenId}`,
-          "Content-Type": "application/json"
+        "Authorization": `Bearer ${storedtokenId}`,
+        "Content-Type": "application/json"
       };
       const payload = {
-          locationId: "iXTyVwO6W2aVQLa0g3Ow",
-          message: text,
-          type: "Live_Chat",
-          chatWidgetId: "66d01cf3f0610d45aac281d0",
-          conversationId: conversationId
+        locationId: "iXTyVwO6W2aVQLa0g3Ow",
+        message: text,
+        type: "Live_Chat",
+        chatWidgetId: "66d01cf3f0610d45aac281d0",
+        conversationId: storedconversationId
       };
-
-      fetch(url, {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify(payload)
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log('Success:', data);
-          // alert('Message sent successfully!');
-          console.log("Messegae sent success!")
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          // alert('Failed to send message.');
-          console.log('Failed to send message.');
+  
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload)
       });
-      
+  
+      const data = await response.json();
+      console.log('Success:', data);
+      console.log("Message sent successfully!");
     } catch (error) {
-      console.log("Error occured during sending message. Please check your leadconnectorhq access!")
+      console.error('Error:', error);
+      console.log('Failed to send message.');
     }
-
   }
+  
+
+  async function handleSpeak() {
+
+  
+    let storedconversationId = localStorage.getItem('conversationId');
+    let storedtokenId = localStorage.getItem('tokenId');
+    if (storedconversationId && storedtokenId) {
+      checkMessage();
+
+      // Log the text state when onSubmit is triggered
+      console.log("Submitted text:", text);
+  
+      //send message here:
+      sendMessage(text);
+    }
+    else {
+      alert("conversationId and tokenId not found!");
+    }
+  }
+
 
   // useEffect to call checkMessage every 30 seconds when the session starts
   useEffect(() => {
